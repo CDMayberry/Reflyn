@@ -16,7 +16,7 @@ I found the Refly library and rather liked the design, but it was built before g
  * It now uses generics within itself, and also allows the creation and usage of generics in the generated code. Generic generation is still a bit clunky, but is workable from my tests with it.
  * The addition of implicit operators, IE FieldDeclaration to FieldReferenceExpression, to simplify 
 
-#### Roslyn vs Reflyn
+### Roslyn vs Reflyn
 Take the following code as an example:
 ```csharp
 using System;
@@ -70,7 +70,9 @@ CompilationUnit()
                                             Identifier("TestBool")))))}))))))
 .NormalizeWhitespace()
 ```
-That's a lot of code! All for a namespace containing a simple class with two fields. Now let's generate the same thing using Reflyn:
+That's a lot of code! All for a namespace containing a simple class with two fields. It could be nested less by using variables but it'd still have to make a lot of calls for the different types, tokens, etc.
+
+Now let's generate the same thing using Reflyn:
 ```csharp
 var demo = new NamespaceDeclaration("Demo.Generated");
 demo.AddImport("System");
@@ -85,13 +87,13 @@ var str = comp.NormalizeWhitespace().ToFullString();
 Far easier to read!
 
 ### Current State
-I'm happy enough with the current state to confidently say it's usable in other projects. I use this in one of my other projects, MirrorState, to generate State and Controller behaviours.
+I'm happy enough with the current state to use it in my other projects. For instance, MirrorState uses this to generate State and Controller behaviours. It's still lacking some features, and the API isn't consistent in a few places, but I'm happy with it as is.
 
 ## Tasks
-- [ ] Reduce usage of methods that take a string directly as a type. Force using Type, TypeTypeDeclaration, or StringTypeDeclaration. 
-- [ ] Improve consistency of 'With' vs 'Add' methods. Sometimes Add is used to indicate the fluent api will return the class being added and With will return the current class being added to, but in other places this is reversed.
+- [ ] Reduce usage of methods that take a string directly as a type. Encourage using Type, TypeTypeDeclaration, or StringTypeDeclaration. 
+- [ ] Improve consistency of 'With' vs 'Add' methods. Sometimes Add is used to indicate the fluent api will return the child declaration and With will return the parent declaration, but in other places this is reversed.
 - [ ] Improve unit tests. I have minimal tests at the moment.
-- [ ] The API for writing generics isn't ideal. It can be a bit confusing when the generic takes generics, needs some improvement.
+- [ ] The API for writing generics isn't ideal. It can be a bit confusing when the generic takes generics, how it generates generics under the hood is a little hacky, overall needs some improvement.
 
 ## License
 This library is under the MIT License.
