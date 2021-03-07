@@ -90,6 +90,7 @@ namespace Reflyn.Test
             Assert.True(true);
         }
 
+        // Comparing to directly writing in Roslyn, courtesy of https://carlos.mendible.com/2017/03/02/create-a-class-with-net-core-and-roslyn/
         [Fact]
         public void Test2()
         {
@@ -99,10 +100,10 @@ namespace Reflyn.Test
                 .SetBaseType("BaseEntity<Order>")
                 .AddInterface("IHaveIdentity");
 
-            var boolField = clss.AddField(typeof(bool), "canceled");
+            var canceledField = clss.AddField(typeof(bool), "canceled");
             var intProp = clss.AddAutoProperty(typeof(int), "Quantity");
 
-            var setTrue = clss.AddMethod("MarkAsCanceled").ToPublic().AddAssign(boolField, Expr.True);
+            var setTrue = clss.AddMethod("MarkAsCanceled").ToPublic().AddAssign(canceledField, Expr.True);
 
             var str = demo.ToCompilationUnit().NormalizeWhitespace().ToFullString();
             Assert.True(true);

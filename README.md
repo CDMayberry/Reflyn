@@ -1,5 +1,5 @@
 # Reflyn
-A code-gen library built around Roslyn, based on Jonathan de Halleux's Refly library. Intended to be a simple and concise API for code generation of C#.
+A code generation library built around Roslyn, based on Jonathan de Halleux's Refly library. Intended to be a simple and concise API for code gen of C#.
 
 ## Source
 The Code Project article for the original Refly can be found [here](https://www.codeproject.com/Articles/6283/Refly-makes-the-CodeDom-er-life-easier).
@@ -85,7 +85,7 @@ demoClass.AddField(typeof(bool), "TestBool");
 var comp = demo.ToCompilationUnit();
 var str = comp.NormalizeWhitespace().ToFullString();
 ```
-Far easier to read! Now, there are still rough edges and parts of Reflyn that require more verbose, but overall it's far easier to read and takes less lines than directly coding with Roslyn.
+Far easier to read!
 
 ### Current State
 I'm happy enough with the current state to use it in my other projects. For instance, MirrorState uses this to generate State and Controller behaviours. It's still lacking some features, and the API isn't consistent in a few places, but I'm happy with it as is.
