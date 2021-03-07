@@ -4,7 +4,7 @@ using Reflyn.Declarations;
 
 namespace Reflyn.Collections
 {
-	public class StringConstantDeclarationDictionary : Dictionary<string, ConstantDeclaration>
+	/*public class StringConstantDeclarationDictionary : Dictionary<string, ConstantDeclaration>
     {
         public virtual void Add(ConstantDeclaration value)
 		{
@@ -15,5 +15,5 @@ namespace Reflyn.Collections
         {
             return this.SelectMany(x => x.Value.GetImports()).ToArray();
         }
-    }
+    }*/
 }

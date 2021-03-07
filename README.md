@@ -1,5 +1,5 @@
 # Reflyn
-A code-gen library built around Roslyn, based on Jonathan de Halleux's Refly library. 
+A code-gen library built around Roslyn, based on Jonathan de Halleux's Refly library. Intended to be a simple and concise API for code generation of C#.
 
 ## Source
 The Code Project article for the original Refly can be found [here](https://www.codeproject.com/Articles/6283/Refly-makes-the-CodeDom-er-life-easier).
@@ -11,6 +11,7 @@ I found the Refly library and rather liked the design, but it was built before g
 
 ### Differences in Refly vs Reflyn
  * Reflyn is targeted at C#, Refly could technically also target VB. Reflyn could perhaps still be target at VB, but a number of the shortcuts and keywords are stringly-typed to C#.
+    * Technically Roslyn can target VB, but Reflyn has some hard-coded types and keywords specific to C#, and would require some rework to allow generation of VB.
  * Moved to a fluent style to make chaining easier.
  * Generic interfaces as Mixins are used for declarations to try minimize the inheritance. There is a lot of overlap of keywords but that then have different rules based on if it's applied to a field, class, property getter/setter, etc. 
  * It now uses generics within itself, and also allows the creation and usage of generics in the generated code. Generic generation is still a bit clunky, but is workable from my tests with it.
@@ -70,7 +71,7 @@ CompilationUnit()
                                             Identifier("TestBool")))))}))))))
 .NormalizeWhitespace()
 ```
-That's a lot of code! All for a namespace containing a simple class with two fields. It could be nested less by using variables but it'd still have to make a lot of calls for the different types, tokens, etc.
+That's a lot of code! All for a namespace containing a simple class with two fields. Now it could be broken out into more pieces to reduce nesting and be a little cleaner to read, here's an [example](https://carlos.mendible.com/2017/03/02/create-a-class-with-net-core-and-roslyn/), but its still verbose and takes a bit of re-reading to understand.
 
 Now let's generate the same thing using Reflyn:
 ```csharp
@@ -84,7 +85,7 @@ demoClass.AddField(typeof(bool), "TestBool");
 var comp = demo.ToCompilationUnit();
 var str = comp.NormalizeWhitespace().ToFullString();
 ```
-Far easier to read!
+Far easier to read! Now, there are still rough edges and parts of Reflyn that require more verbose, but overall it's far easier to read and takes less lines than directly coding with Roslyn.
 
 ### Current State
 I'm happy enough with the current state to use it in my other projects. For instance, MirrorState uses this to generate State and Controller behaviours. It's still lacking some features, and the API isn't consistent in a few places, but I'm happy with it as is.

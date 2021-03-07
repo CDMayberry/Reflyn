@@ -16,11 +16,12 @@ namespace Reflyn.Test
         string TestStr { get; set; }
     }
 
+    // Basically using this as a console to just test whatever I'm working on.
     public class DebugTest
     {
         // This is more of a Compiler and Run test, if it all builds and runs it passes.
         [Fact]
-        public void Test()
+        public void Test1()
         {
             var state = typeof(SampleState);
             string name = state.Name.Substring(1);
@@ -86,6 +87,24 @@ namespace Reflyn.Test
                 .CallBaseWithParameters();*/
             var comp = demo.ToCompilationUnit();
             var str = comp.NormalizeWhitespace().ToFullString();
+            Assert.True(true);
+        }
+
+        [Fact]
+        public void Test2()
+        {
+            var demo = new NamespaceDeclaration("CodeGenerationSample");
+
+            var clss = demo.AddClass("Order")
+                .SetBaseType("BaseEntity<Order>")
+                .AddInterface("IHaveIdentity");
+
+            var boolField = clss.AddField(typeof(bool), "canceled");
+            var intProp = clss.AddAutoProperty(typeof(int), "Quantity");
+
+            var setTrue = clss.AddMethod("MarkAsCanceled").ToPublic().AddAssign(boolField, Expr.True);
+
+            var str = demo.ToCompilationUnit().NormalizeWhitespace().ToFullString();
             Assert.True(true);
         }
 

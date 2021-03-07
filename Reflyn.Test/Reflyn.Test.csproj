@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ReflyN\Reflyn.csproj" />
-    <ProjectReference Include="..\Refly\Reflyn.csproj" />
+    <ProjectReference Include="..\Reflyn\Reflyn.csproj" />
   </ItemGroup>
 
 </Project>

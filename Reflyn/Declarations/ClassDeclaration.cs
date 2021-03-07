@@ -29,7 +29,7 @@ namespace Reflyn.Declarations
         
         public TypeDeclarationList Interfaces { get; } = new TypeDeclarationList();
 
-        public StringConstantDeclarationDictionary StringConstants { get; } = new StringConstantDeclarationDictionary();
+        //public StringConstantDeclarationDictionary StringConstants { get; } = new StringConstantDeclarationDictionary();
 
         public StringFieldDeclarationDictionary StringFields { get; } = new StringFieldDeclarationDictionary();
 
@@ -174,27 +174,17 @@ namespace Reflyn.Declarations
             return this;
         }
 
-        public ConstantDeclaration AddConstant(Type type, string name, SnippetExpression expression)
+        public FieldDeclaration AddConstant(Type type, string name, Expression assignment)
         {
-            if ((object)type == null)
+            if (assignment == null)
             {
-                throw new ArgumentNullException(nameof(type));
+                throw new NullReferenceException("assignment cannot be null, a constant requires a value.");
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
-            if (StringConstants.ContainsKey(name))
-            {
-                throw new ArgumentException("field already existing in class: " + name);
-            }
-            var constantDeclaration = new ConstantDeclaration(base.Conformer.ToCamel(name), this, type, expression);
-            StringConstants.Add(constantDeclaration);
-            return constantDeclaration;
+
+            var field = AddField(type, name);
+            field.ToConst();
+            field.InitExpression = assignment;
+            return field;
         }
 
         public FieldDeclaration[] Fields => StringFields.Values.ToArray();
